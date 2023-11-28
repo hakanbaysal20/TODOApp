@@ -2,6 +2,7 @@
 
 ### MVVM Architecture
 ### Sqlite
+### Bloc Pattern
 
 
 ## Application Images
