@@ -22,8 +22,6 @@ class _HomeState extends State<Home> {
   }
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -46,7 +44,6 @@ class _HomeState extends State<Home> {
                   isSearch = false;
                 });
               }, icon: const Icon(Icons.clear))
-
               :IconButton(onPressed: () {
                 setState(() {
                   isSearch = true;
@@ -57,7 +54,6 @@ class _HomeState extends State<Home> {
       body: BlocBuilder<HomeCubit,List<ToDoModel>>(
             builder: (context, todoList) {
               if(todoList.isNotEmpty){
-                print("asdasd");
                 return GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
                   itemCount: todoList.length,
@@ -105,7 +101,6 @@ class _HomeState extends State<Home> {
                   },
                 );
               }else{
-                print("asdasd00");
                 return const Center();
               }
           },)

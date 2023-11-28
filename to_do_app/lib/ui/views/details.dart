@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do_app/data/entity/to_do_model.dart';
 import 'package:to_do_app/ui/bloc/details_cubit.dart';
-import 'package:to_do_app/ui/bloc/registration_cubit.dart';
 
 
 class Details extends StatefulWidget {
@@ -28,24 +27,27 @@ class _DetailsState extends State<Details> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("To Do Details"),centerTitle: true,),
-      body: Center(
+      appBar: AppBar(title: const Text("To Do Details"),centerTitle: true,),
+      body: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              controller: tfName,
-              decoration: InputDecoration(hintText: widget.model.todo_name),
-            ),
-            TextField(
-              controller: tfDescription,
-              decoration: InputDecoration(hintText: widget.model.description_name),
-            ),
-            ElevatedButton(onPressed: () {
-              context.read<DetailsCubit>().updateToDo(widget.model.todo_id,tfName.text,tfDescription.text);
-            }, child: Text("Güncelle")),
-          ],
-        ),
+            children: [
+              TextField(
+                maxLines: null,
+                controller: tfName,
+                decoration: InputDecoration(border: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(12))),hintText: widget.model.todo_name),
+              ),
+              const SizedBox(height: 50),
+              TextField(
+                maxLines: null,
+                controller: tfDescription,
+                decoration: InputDecoration(border: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(12))),hintText: widget.model.description_name),
+              ),
+              ElevatedButton(onPressed: () {
+                context.read<DetailsCubit>().updateToDo(widget.model.todo_id,tfName.text,tfDescription.text);
+              }, child: const Text("Güncelle")),
+            ],
+          ),
+
       ),
     );
   }
