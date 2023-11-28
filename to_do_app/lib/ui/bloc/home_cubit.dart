@@ -3,14 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do_app/data/entity/to_do_model.dart';
 import 'package:to_do_app/data/repository/todo_repository.dart';
 
-class ToDoCubit extends Cubit<List<ToDoModel>> {
+class HomeCubit extends Cubit<List<ToDoModel>> {
 
-  ToDoCubit():super(<ToDoModel>[]);
+  HomeCubit():super(<ToDoModel>[]);
 
   var tRepo = ToDoRepository();
 
-  Future<void> loadToDo() async{
-    var list = await tRepo.loadToDo();
+  Future<void> getToDo() async{
+    var list = await tRepo.getToDo();
     emit(list);
   }
   Future<void> searchToDo(String searchWord) async {
@@ -19,7 +19,7 @@ class ToDoCubit extends Cubit<List<ToDoModel>> {
   }
   Future<void> deleteToDo(int todo_id) async {
     await tRepo.deleteToDo(todo_id);
-    loadToDo();
+    getToDo();
   }
 
 

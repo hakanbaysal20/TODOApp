@@ -3,7 +3,7 @@ import 'package:to_do_app/sqlite/database_assistant.dart';
 
 class ToDoRepository{
 
-  Future<List<ToDoModel>> loadToDo() async {
+  Future<List<ToDoModel>> getToDo() async {
     var db = await DatabaseAccess.databaseAccess();
     List<Map<String,dynamic>> rows = await db.rawQuery("SELECT * FROM todo");
     
@@ -46,11 +46,7 @@ class ToDoRepository{
   Future<void> deleteToDo(int todo_id) async {
     var db = await DatabaseAccess.databaseAccess();
     await db.delete("todo",where: "todo_id = ?",whereArgs: [todo_id]);
-
   }
-
-
-
 
 
 }

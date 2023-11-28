@@ -1,9 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do_app/data/repository/todo_repository.dart';
 
-class ToDoSaveCubit extends Cubit<void> {
+class RegistrationCubit extends Cubit<void> {
 
-  ToDoSaveCubit():super(0);
+  RegistrationCubit():super(0);
   var tRepo = ToDoRepository();
 
 

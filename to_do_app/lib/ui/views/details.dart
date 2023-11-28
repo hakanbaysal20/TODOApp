@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do_app/data/entity/to_do_model.dart';
-import 'package:to_do_app/ui/bloc/to_do_details_cubit.dart';
-import 'package:to_do_app/ui/bloc/to_do_save_cubit.dart';
+import 'package:to_do_app/ui/bloc/details_cubit.dart';
+import 'package:to_do_app/ui/bloc/registration_cubit.dart';
 
 
-class ToDoDetails extends StatefulWidget {
+class Details extends StatefulWidget {
   ToDoModel model;
 
 
-  ToDoDetails({required this.model});
+  Details({required this.model});
 
   @override
-  State<ToDoDetails> createState() => _ToDoDetailsState();
+  State<Details> createState() => _DetailsState();
 }
 
-class _ToDoDetailsState extends State<ToDoDetails> {
+class _DetailsState extends State<Details> {
   var tfName = TextEditingController();
   var tfDescription = TextEditingController();
   @override
@@ -42,8 +42,7 @@ class _ToDoDetailsState extends State<ToDoDetails> {
               decoration: InputDecoration(hintText: widget.model.description_name),
             ),
             ElevatedButton(onPressed: () {
-              context.read<ToDoDetailsCubit>().updateToDo(widget.model.todo_id,tfName.text,tfDescription.text);
-              Navigator.pop(context);
+              context.read<DetailsCubit>().updateToDo(widget.model.todo_id,tfName.text,tfDescription.text);
             }, child: Text("Güncelle")),
           ],
         ),
