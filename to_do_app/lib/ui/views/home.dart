@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:to_do_app/constants/color_constants.dart';
 import 'package:to_do_app/data/entity/to_do_model.dart';
 import 'package:to_do_app/ui/bloc/home_cubit.dart';
 import 'package:to_do_app/ui/views/details.dart';
@@ -23,6 +24,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorConstants.primaryColorLight,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) => const Registration(),))
@@ -33,29 +35,29 @@ class _HomeState extends State<Home> {
         child: const Icon(Icons.add),
       ),
       appBar: AppBar(
-        title: isSearch ? TextField(decoration: const InputDecoration(hintText: "Ara"),onChanged: (value) {
+        backgroundColor: ColorConstants.primaryColor,
+        title: isSearch ? TextField(decoration: const InputDecoration(hintText: "Ara",hintStyle: TextStyle(color: ColorConstants.white)),onChanged: (value) {
           context.read<HomeCubit>().searchToDo(value);
-        },) : const Text("To Do"),
-        centerTitle: true,
+        },) : const Text("TODO APP",style: TextStyle(color: ColorConstants.white,fontSize: 24,fontFamily: 'Jost',fontWeight: FontWeight.bold),),
+
         actions: [
           isSearch ?
               IconButton(onPressed: () {
                 setState(() {
                   isSearch = false;
                 });
-              }, icon: const Icon(Icons.clear))
+              }, icon: const Icon(Icons.clear,color: ColorConstants.white,))
               :IconButton(onPressed: () {
                 setState(() {
                   isSearch = true;
                 });
-              }, icon: const Icon(Icons.search)),
+              }, icon: const Icon(Icons.search,color: ColorConstants.white,)),
         ],
       ),
       body: BlocBuilder<HomeCubit,List<ToDoModel>>(
             builder: (context, todoList) {
               if(todoList.isNotEmpty){
-                return GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                return ListView.builder(
                   itemCount: todoList.length,
                   itemBuilder: (context, index) {
                     var todo = todoList[index];
@@ -66,34 +68,44 @@ class _HomeState extends State<Home> {
                               context.read<HomeCubit>().getToDo();
                             });
                       },
-                      child: Card(
-                        child: Column(
-                          children: [
-                            Text(todo.todo_name,style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
+                      child: SizedBox(
+                        height: 100,
+                        child: Card(
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 16,left: 16),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
 
-                            Text(todo.description_name,textAlign: TextAlign.center,),
-                                  Spacer(),
+                                   Padding(
+                                     padding: const EdgeInsets.all(8.0),
+                                     child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(todo.todo_name,style: const TextStyle(color: ColorConstants.primaryColor,fontWeight: FontWeight.bold,fontSize: 16,fontFamily: 'Jost')),
 
-                                  TextButton(onPressed: () {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                          backgroundColor: Colors.blueAccent,
-                                          content: const Text("Silinsin mi?"),
-                                          action: SnackBarAction(label: "Evet",textColor: Colors.white,
-                                            onPressed: () {
-                                            context.read<HomeCubit>().deleteToDo(todo.todo_id);
-                                          },),
+                                        Text(todo.description_name,style: TextStyle(fontFamily: 'Jost',fontSize: 13,)),
+                                      ],
+                                  ),
+                                   ),
 
-                                        ),
-                                    );
-                                  }, child: const Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children:[
-                                       Icon(Icons.close,color: Colors.red,),
-                                     Text("Sil",style: TextStyle(color: Colors.black87),),
-                                    ],
-                                  ),),
-                          ],
+                                IconButton(onPressed: () {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      backgroundColor: ColorConstants.white,
+                                      content: const Text("Silinsin mi?",style: TextStyle(color: ColorConstants.primaryColorLight),),
+                                      action: SnackBarAction(label: "Evet",textColor: ColorConstants.primaryColorLight,
+                                        onPressed: () {
+                                          context.read<HomeCubit>().deleteToDo(todo.todo_id);
+                                        },),
+
+                                    ),
+                                  );
+                                }, icon: Icon(Icons.delete_outline_outlined,size: 25,color: ColorConstants.primaryColorLight,),
+                                )],
+                            ),
+                          ),
                         ),
                       ),
                     );

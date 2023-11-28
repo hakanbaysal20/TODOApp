@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:to_do_app/constants/color_constants.dart';
 import 'package:to_do_app/data/entity/to_do_model.dart';
 import 'package:to_do_app/ui/bloc/details_cubit.dart';
 
@@ -27,28 +28,62 @@ class _DetailsState extends State<Details> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("To Do Details"),centerTitle: true,),
-      body: SingleChildScrollView(
-        child: Column(
+      appBar: AppBar(
+          backgroundColor: ColorConstants.primaryColor,
+          title: const Text("Edit Task",style: TextStyle(fontFamily: 'Jost',color: ColorConstants.white,fontSize: 24,fontWeight: FontWeight.bold),),
+          leading: IconButton(onPressed: () {
+            Navigator.pop(context);
+            
+          }, icon: const Icon(Icons.arrow_back,size: 30,color: Colors.white,)),
+        ),
+      body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              TextField(
-                maxLines: null,
-                controller: tfName,
-                decoration: InputDecoration(border: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(12))),hintText: widget.model.todo_name),
+              Padding(
+                padding: const EdgeInsets.only(left: 24,right: 24),
+                child: Column(
+                  children: [
+                    TextField(
+                      maxLines: null,
+                      controller: tfName,
+                      decoration: const InputDecoration(hintText: "Title",hintStyle: TextStyle(fontFamily: 'Jost')),
+                    ),
+                    const SizedBox(height: 50),
+                    TextField(
+                      maxLines: null,
+                      controller: tfDescription,
+                      decoration: const InputDecoration(hintText: "Detail",hintStyle: TextStyle(fontFamily: 'Jost')),
+                    ),
+                  ],
+                ),
               ),
-              const SizedBox(height: 50),
-              TextField(
-                maxLines: null,
-                controller: tfDescription,
-                decoration: InputDecoration(border: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(12))),hintText: widget.model.description_name),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(
+                    width: 170,
+                    height: 65,
+                    child: TextButton(onPressed: () {
+                      context.read<DetailsCubit>().updateToDo(widget.model.todo_id,tfName.text,tfDescription.text);
+                    }, style: TextButton.styleFrom(backgroundColor: ColorConstants.primaryColor,shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15)))),
+
+                        child: const Text("Update",style: TextStyle(fontFamily: 'Jost',color: ColorConstants.white),)),
+                  ),
+                  SizedBox(
+                    width: 170,
+                    height: 65,
+                    child: TextButton(onPressed: () {
+                      Navigator.pop(context);
+                    }, style: TextButton.styleFrom(backgroundColor: ColorConstants.primaryColor,shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15)))),
+
+                        child: const Text("Cancel",style: TextStyle(fontFamily: 'Jost',color: ColorConstants.white),)),
+                  ),
+                ],
               ),
-              ElevatedButton(onPressed: () {
-                context.read<DetailsCubit>().updateToDo(widget.model.todo_id,tfName.text,tfDescription.text);
-              }, child: const Text("Güncelle")),
             ],
           ),
 
-      ),
+
     );
   }
 }
