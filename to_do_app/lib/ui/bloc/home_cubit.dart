@@ -21,6 +21,10 @@ class HomeCubit extends Cubit<List<ToDoModel>> {
     await tRepo.deleteToDo(todo_id);
     getToDo();
   }
+  Future<void> scheduleControl() async{
+    await tRepo.scheduleControl();
+    getToDo();
+  }
 
 
 

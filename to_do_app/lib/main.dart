@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do_app/ui/bloc/details_cubit.dart';
+import 'package:to_do_app/ui/bloc/history_cubit.dart';
 import 'package:to_do_app/ui/bloc/registration_cubit.dart';
 import 'package:to_do_app/ui/bloc/home_cubit.dart';
 import 'package:to_do_app/ui/views/home.dart';
 import 'package:to_do_app/ui/views/tab_bar.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
+
 }
 
 class MyApp extends StatelessWidget {
@@ -19,6 +22,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => HomeCubit(),),
         BlocProvider(create: (context) => DetailsCubit(),),
         BlocProvider(create: (context) => RegistrationCubit(),),
+        BlocProvider(create: (context) => HistoryCubit(),)
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

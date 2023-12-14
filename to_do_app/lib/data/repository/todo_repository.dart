@@ -9,7 +9,6 @@ class ToDoRepository{
   Future<List<ToDoModel>> getToDo() async {
     var db = await DatabaseAccess.databaseAccess();
     List<Map<String,dynamic>> rows = await db.rawQuery("SELECT * FROM todo");
-    
     return List.generate(rows.length,(index) {
       var date_time = "";
 
@@ -25,6 +24,22 @@ class ToDoRepository{
       return ToDoModel(todo_id: todo_id, todo_name: todo_name, description_name: description_name,date_time: date_time);
     });
 
+  }
+  Future<void> scheduleControl() async{
+    var currentDateTime = DateTime.now();
+    var tob = DateFormat('dd/MM/yyyy').format(currentDateTime);
+    var db = await DatabaseAccess.databaseAccess();
+    var newToDo = Map<String,dynamic>();
+    var getTodo = await getToDo();
+    for(var g in getTodo){
+      if(g.date_time == tob){
+        newToDo["history_name"] = g.todo_name;
+        newToDo["history_description"] = g.description_name;
+        newToDo["history_date_time"] = g.date_time;
+        await db.insert("history", newToDo);
+        await db.delete("todo",where: "todo_id = ? ",whereArgs: [g.todo_id]);
+      }
+    }
   }
   Future<List<ToDoModel>> searchToDo(String searchWord) async {
     var db = await DatabaseAccess.databaseAccess();
