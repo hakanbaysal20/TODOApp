@@ -76,7 +76,6 @@ class _HomeState extends State<Home> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-
                                    Padding(
                                      padding: const EdgeInsets.all(8.0),
                                      child: Column(
@@ -89,20 +88,24 @@ class _HomeState extends State<Home> {
                                       ],
                                   ),
                                    ),
+                                Column(
+                                  children: [
+                                    Text(todo.date_time),
+                                    IconButton(onPressed: () {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          backgroundColor: ColorConstants.white,
+                                          content: const Text("Silinsin mi?",style: TextStyle(color: ColorConstants.primaryColorLight),),
+                                          action: SnackBarAction(label: "Evet",textColor: ColorConstants.primaryColorLight,
+                                            onPressed: () {
+                                              context.read<HomeCubit>().deleteToDo(todo.todo_id);
+                                            },),
 
-                                IconButton(onPressed: () {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      backgroundColor: ColorConstants.white,
-                                      content: const Text("Silinsin mi?",style: TextStyle(color: ColorConstants.primaryColorLight),),
-                                      action: SnackBarAction(label: "Evet",textColor: ColorConstants.primaryColorLight,
-                                        onPressed: () {
-                                          context.read<HomeCubit>().deleteToDo(todo.todo_id);
-                                        },),
-
+                                        ),
+                                      );
+                                    }, icon: Icon(Icons.delete_outline_outlined,size: 25,color: ColorConstants.primaryColorLight,),
                                     ),
-                                  );
-                                }, icon: Icon(Icons.delete_outline_outlined,size: 25,color: ColorConstants.primaryColorLight,),
+                                  ],
                                 )],
                             ),
                           ),

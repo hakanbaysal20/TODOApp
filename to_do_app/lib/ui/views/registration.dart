@@ -14,6 +14,7 @@ class Registration extends StatefulWidget {
 class _RegistrationState extends State<Registration> {
   var tfName = TextEditingController();
   var tfDescription = TextEditingController();
+  var tfDate = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,6 +44,19 @@ class _RegistrationState extends State<Registration> {
                   controller: tfDescription,
                   decoration: const InputDecoration(hintText: "Detail",hintStyle: TextStyle(fontFamily: 'Jost')),
                 ),
+                TextFormField(
+                  controller: tfDate,
+                  keyboardType: TextInputType.none,
+                  decoration: InputDecoration(hintText: tfDate.text,),
+                  validator: (value) {
+                    if(value == null || value.isEmpty){
+                      return 'DATE';
+                    }
+                    return null;
+                  },
+                  onTap: () => context.read<RegistrationCubit>().pickDate(context,tfDate),
+
+                ),
               ],
             ),
           ),
@@ -51,7 +65,7 @@ class _RegistrationState extends State<Registration> {
                 width: 300,
                 height: 65,
                 child: TextButton(onPressed: () {
-                 context.read<RegistrationCubit>().saveToDo(tfName.text, tfDescription.text);
+                 context.read<RegistrationCubit>().saveToDo(tfName.text, tfDescription.text,tfDate.text);
                 }, style: TextButton.styleFrom(backgroundColor: ColorConstants.primaryColor,shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15)))),
 
                     child: const Text("ADD",style: TextStyle(fontFamily: 'Jost',fontWeight: FontWeight.bold,fontSize: 20,color: ColorConstants.white),)),
