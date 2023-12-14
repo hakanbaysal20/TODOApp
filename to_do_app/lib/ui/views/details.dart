@@ -4,6 +4,8 @@ import 'package:to_do_app/constants/color_constants.dart';
 import 'package:to_do_app/data/entity/to_do_model.dart';
 import 'package:to_do_app/ui/bloc/details_cubit.dart';
 
+import '../bloc/registration_cubit.dart';
+
 
 class Details extends StatefulWidget {
   ToDoModel model;
@@ -18,6 +20,7 @@ class Details extends StatefulWidget {
 class _DetailsState extends State<Details> {
   var tfName = TextEditingController();
   var tfDescription = TextEditingController();
+  var tfDate = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -54,6 +57,22 @@ class _DetailsState extends State<Details> {
                       controller: tfDescription,
                       decoration: const InputDecoration(hintText: "Detail",hintStyle: TextStyle(fontFamily: 'Jost')),
                     ),
+                    const SizedBox(height: 50),
+                    TextFormField(
+                      controller: tfDate,
+                      keyboardType: TextInputType.none,
+                      decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.watch_later_outlined,color: ColorConstants.primaryColor,),
+                          hintText: tfDate.text),
+                      validator: (value) {
+                        if(value == null || value.isEmpty){
+                          return 'DATE';
+                        }
+                        return null;
+                      },
+                      onTap: () => context.read<RegistrationCubit>().pickDate(context,tfDate),
+
+                    ),
                   ],
                 ),
               ),
@@ -64,7 +83,7 @@ class _DetailsState extends State<Details> {
                     width: 170,
                     height: 65,
                     child: TextButton(onPressed: () {
-                      context.read<DetailsCubit>().updateToDo(widget.model.todo_id,tfName.text,tfDescription.text);
+                      context.read<DetailsCubit>().updateToDo(widget.model.todo_id,tfName.text,tfDescription.text,tfDate.text);
                     }, style: TextButton.styleFrom(backgroundColor: ColorConstants.primaryColor,shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15)))),
 
                         child: const Text("Update",style: TextStyle(fontFamily: 'Jost',color: ColorConstants.white),)),

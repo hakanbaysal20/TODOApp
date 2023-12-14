@@ -47,11 +47,12 @@ class ToDoRepository{
     newTodo["date_time"] = date_time;
     await db.insert("todo", newTodo);
   }
-  Future<void> updateToDo(int todo_id,String todo_name,String description_name) async {
+  Future<void> updateToDo(int todo_id,String todo_name,String description_name,String date_time) async {
     var db = await DatabaseAccess.databaseAccess();
     var updateTodo = Map<String,dynamic>();
     updateTodo["todo_name"] = todo_name;
     updateTodo["description_name"] = description_name;
+    updateTodo["date_time"] = date_time;
     await db.update("todo", updateTodo,where: "todo_id = ? ",whereArgs: [todo_id]);
 
   }

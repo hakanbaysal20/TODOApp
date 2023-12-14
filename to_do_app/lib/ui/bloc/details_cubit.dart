@@ -6,7 +6,7 @@ class DetailsCubit extends Cubit<void> {
 
   var tRepo = ToDoRepository();
 
-  Future<void> updateToDo(int todo_id,String todo_name,String todo_description) async {
-    await tRepo.updateToDo(todo_id, todo_name, todo_description);
+  Future<void> updateToDo(int todo_id,String todo_name,String todo_description,String date_time) async {
+    await tRepo.updateToDo(todo_id, todo_name, todo_description,date_time);
   }
 }

@@ -36,18 +36,23 @@ class _RegistrationState extends State<Registration> {
                 TextField(
                   maxLines: null,
                   controller: tfName,
-                  decoration: const InputDecoration(hintText: "Title",hintStyle: TextStyle(fontFamily: 'Jost')),
+                  decoration: const InputDecoration(prefixIcon: Icon(Icons.title_outlined,color: ColorConstants.primaryColor,),hintText: "Title",hintStyle: TextStyle(fontFamily: 'Jost')),
                 ),
                 const SizedBox(height: 50),
                 TextField(
                   maxLines: null,
                   controller: tfDescription,
-                  decoration: const InputDecoration(hintText: "Detail",hintStyle: TextStyle(fontFamily: 'Jost')),
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.description_outlined,color: ColorConstants.primaryColor,),
+                      hintText: "Detail",hintStyle: TextStyle(fontFamily: 'Jost')),
                 ),
+                const SizedBox(height: 50),
                 TextFormField(
                   controller: tfDate,
                   keyboardType: TextInputType.none,
-                  decoration: InputDecoration(hintText: tfDate.text,),
+                  decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.watch_later_outlined,color: ColorConstants.primaryColor,),
+                      hintText: tfDate.text),
                   validator: (value) {
                     if(value == null || value.isEmpty){
                       return 'DATE';

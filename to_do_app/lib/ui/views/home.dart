@@ -34,26 +34,6 @@ class _HomeState extends State<Home> {
        },
         child: const Icon(Icons.add),
       ),
-      appBar: AppBar(
-        backgroundColor: ColorConstants.primaryColor,
-        title: isSearch ? TextField(decoration: const InputDecoration(hintText: "Ara",hintStyle: TextStyle(color: ColorConstants.white)),onChanged: (value) {
-          context.read<HomeCubit>().searchToDo(value);
-        },) : const Text("TODO APP",style: TextStyle(color: ColorConstants.white,fontSize: 24,fontFamily: 'Jost',fontWeight: FontWeight.bold),),
-
-        actions: [
-          isSearch ?
-              IconButton(onPressed: () {
-                setState(() {
-                  isSearch = false;
-                });
-              }, icon: const Icon(Icons.clear,color: ColorConstants.white,))
-              :IconButton(onPressed: () {
-                setState(() {
-                  isSearch = true;
-                });
-              }, icon: const Icon(Icons.search,color: ColorConstants.white,)),
-        ],
-      ),
       body: BlocBuilder<HomeCubit,List<ToDoModel>>(
             builder: (context, todoList) {
               if(todoList.isNotEmpty){
@@ -90,7 +70,7 @@ class _HomeState extends State<Home> {
                                    ),
                                 Column(
                                   children: [
-                                    Text(todo.date_time),
+                                    Text(todo.date_time,style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 13,fontFamily: 'Jost'),),
                                     IconButton(onPressed: () {
                                       ScaffoldMessenger.of(context).showSnackBar(
                                         SnackBar(

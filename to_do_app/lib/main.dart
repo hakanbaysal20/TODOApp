@@ -4,6 +4,7 @@ import 'package:to_do_app/ui/bloc/details_cubit.dart';
 import 'package:to_do_app/ui/bloc/registration_cubit.dart';
 import 'package:to_do_app/ui/bloc/home_cubit.dart';
 import 'package:to_do_app/ui/views/home.dart';
+import 'package:to_do_app/ui/views/tab_bar.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const Home(),
+        home: const TabBarScreen(),
       ),
     );
   }
