@@ -20,6 +20,8 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     context.read<HomeCubit>().getToDo();
+    context.read<HomeCubit>().scheduleControl();
+
   }
   @override
   Widget build(BuildContext context) {

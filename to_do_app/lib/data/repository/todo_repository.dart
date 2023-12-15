@@ -27,12 +27,13 @@ class ToDoRepository{
   }
   Future<void> scheduleControl() async{
     var currentDateTime = DateTime.now();
-    var tob = DateFormat('dd/MM/yyyy').format(currentDateTime);
+    var tob = DateFormat('dd/MM/yyyy HH:mm').format(currentDateTime);
     var db = await DatabaseAccess.databaseAccess();
     var newToDo = Map<String,dynamic>();
     var getTodo = await getToDo();
     for(var g in getTodo){
-      if(g.date_time == tob){
+      var dbTime = DateFormat('dd/MM/yyyy HH:mm').parse(g.date_time);
+      if(currentDateTime.isAfter(dbTime) || dbTime.isAtSameMomentAs(currentDateTime)){
         newToDo["history_name"] = g.todo_name;
         newToDo["history_description"] = g.description_name;
         newToDo["history_date_time"] = g.date_time;
@@ -78,6 +79,7 @@ class ToDoRepository{
 
   Future<void> pickDate(BuildContext context,TextEditingController controller) async {
     final initialDate = DateTime.now();
+    final initialTime = TimeOfDay.now();
     final newDate = await showDatePicker(
       context: context,
       initialDate: initialDate,
@@ -92,8 +94,19 @@ class ToDoRepository{
     if (newDate == null) {
       return;
     }
-    var dob = DateFormat('dd/MM/yyyy').format(newDate);
-    controller.text = dob;
+    final newTime = await showTimePicker(
+      context: context,
+      initialTime: initialTime,
+      builder: (context, child) {
+        return child ?? Text("");
+      },
+    );
+    if (newTime == null) {
+      return;
+    }
+    var scheduleDate = DateTime(newDate.year,newDate.month,newDate.day,newTime.hour,newTime.minute);
+    var date = DateFormat('dd/MM/yyyy HH:mm').format(scheduleDate);
+    controller.text = date;
   }
 
 }
