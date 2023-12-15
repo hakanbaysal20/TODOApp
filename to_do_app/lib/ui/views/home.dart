@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do_app/constants/color_constants.dart';
 import 'package:to_do_app/data/entity/to_do_model.dart';
+import 'package:to_do_app/data/notification_manager.dart';
 import 'package:to_do_app/ui/bloc/home_cubit.dart';
 import 'package:to_do_app/ui/views/details.dart';
 import 'package:to_do_app/ui/views/registration.dart';
@@ -19,6 +20,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
+    NotificationManager().setup();
     context.read<HomeCubit>().getToDo();
     context.read<HomeCubit>().scheduleControl();
 
@@ -80,6 +82,7 @@ class _HomeState extends State<Home> {
                                           content: const Text("Silinsin mi?",style: TextStyle(color: ColorConstants.primaryColorLight),),
                                           action: SnackBarAction(label: "Evet",textColor: ColorConstants.primaryColorLight,
                                             onPressed: () {
+                                            NotificationManager().showNotification();
                                               context.read<HomeCubit>().deleteToDo(todo.todo_id);
                                             },),
 

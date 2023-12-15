@@ -24,6 +24,10 @@ class HistoryRepository{
     });
 
   }
+  Future<void> deleteHistory(int todo_id) async{
+    var db = await DatabaseAccess.databaseAccess();
+    await db.delete("history",where: "history_id = ?",whereArgs: [todo_id]);
+  }
 
 
 

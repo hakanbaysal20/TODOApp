@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:to_do_app/data/entity/to_do_model.dart';
+import 'package:to_do_app/data/notification_manager.dart';
 import 'package:to_do_app/sqlite/database_assistant.dart';
 
 class ToDoRepository{
@@ -39,9 +40,12 @@ class ToDoRepository{
         newToDo["history_date_time"] = g.date_time;
         await db.insert("history", newToDo);
         await db.delete("todo",where: "todo_id = ? ",whereArgs: [g.todo_id]);
+        NotificationManager().showNotification();
+
       }
     }
   }
+
   Future<List<ToDoModel>> searchToDo(String searchWord) async {
     var db = await DatabaseAccess.databaseAccess();
     List<Map<String,dynamic>> rows = await db.rawQuery("SELECT * FROM todo WHERE todo_name like '%$searchWord%'");

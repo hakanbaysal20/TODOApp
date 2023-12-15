@@ -13,4 +13,8 @@ class HistoryCubit extends Cubit<List<ToDoModel>>{
     var list = await tRepo.getToDo();
     emit(list);
   }
+  Future<void> deleteHistory(int todo_id) async{
+    await tRepo.deleteHistory(todo_id);
+    getHistory();
+  }
 }

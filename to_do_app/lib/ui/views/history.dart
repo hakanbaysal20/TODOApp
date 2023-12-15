@@ -66,6 +66,7 @@ class _HistoryState extends State<History> {
                                     content: const Text("Silinsin mi?",style: TextStyle(color: ColorConstants.primaryColorLight),),
                                     action: SnackBarAction(label: "Evet",textColor: ColorConstants.primaryColorLight,
                                       onPressed: () {
+                                      context.read<HistoryCubit>().deleteHistory(todo.todo_id);
                                       },),
 
                                   ),
